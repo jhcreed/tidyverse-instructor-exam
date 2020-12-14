@@ -1,7 +1,7 @@
 
 # RStudio Instructor Certification Teaching Exam
 
-📺 [View Slides](https://github.com/jhcreed)
+📺 [View Slides](https://friendly-wozniak-ba74a8.netlify.app/#1)
 
 ## Learner Persona
 

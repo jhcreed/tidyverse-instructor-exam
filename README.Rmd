@@ -13,7 +13,7 @@ library(emo)
 
 # RStudio Instructor Certification Teaching Exam 
 
-`r emo::ji("tv")` [View Slides](https://github.com/jhcreed)
+`r emo::ji("tv")` [View Slides](https://friendly-wozniak-ba74a8.netlify.app/#1)
 
 ## Learner Persona 
 
