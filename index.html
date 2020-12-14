@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>The Life-Changing Magic of Tidying Up: Data cleaning using dplyr/tidyr</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jordan Creed" />
+    <meta name="date" content="2020-12-16" />
+    <link href="libs/animate.css-3.7.2/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/panelset-0.0.14/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.0.14/panelset.js"></script>
+    <link href="libs/tachyons-4.11.1/tachyons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+class: center middle hide-count hide-logo
+
+&lt;div class="talk-logo"&gt;&lt;/div&gt;
+
+.talk-meta[
+  .talk-title[# The Life-Changing Magic of Tidying Up&lt;br&gt; .smaller[Data cleaning using tidyr and dplyr]]
+
+  .talk-author[Jordan Creed]
+  
+  .talk-date[&lt;img src="figures/twitter_logo.svg" alt="Twitter logo" width="24px"/&gt; @jhcreed]
+]
+
+???
+
+---
+
+## Patient lab data  
+
+.pull-left[
+Theoretical example based on common lab data.
+
+3 columns and 15 rows:
+
+1. `patient_id` : 5 digit number unique to each patient
+2. `test` : name of lab measurement 
+  + `height`, `weight` and `blood`
+3. `value` : value of the lab measurement
+  + inches, pounds, and systolic/diastolic
+
+]
+
+.pull-right[
+
+
+```r
+patient_vitals
+```
+
+```
+## # A tibble: 15 x 3
+##    patient_id test   value 
+##         &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
+##  1      15628 height 68    
+##  2      15628 weight 175   
+##  3      15628 blood  121/89
+##  4      73694 height 72    
+##  5      73694 weight 220   
+##  6      73694 blood  138/82
+##  7      42119 height 66    
+##  8      42119 weight 135   
+##  9      42119 blood  &lt;NA&gt;  
+## 10      98056 height 61    
+## 11      98056 weight 120   
+## 12      98056 blood  144/95
+## 13      87417 height 67    
+## 14      87417 weight 191   
+## 15      87417 blood  137/91
+```
+
+]
+
+---
+
+## What is "tidy" data? 
+
+.pull-left[
+Data comes in all shapes and sizes, but not all data organization is made equal!
+
+3 elements of tidy data:
+
+1. Each .accent-blue[variable] has its own .accent-blue[column]
+2. Each .accent-blue[observation] has its own .accent-blue[row]
+3. Each .accent-blue[value] has it own .accent-blue[cell]
+
+.blank[blank line]
+
+👉 For more information please see chapter 11 of [R for Data Science](https://r4ds.had.co.nz/data-import.html)
+]
+
+.pull-right.h-center[
+![](figures/marie-condo-cords.gif)
+]
+
+---
+
+## What would "tidy" lab data look like? 
+
+.pull-left[
+A)
+
+![](figures/data-a.png)
+
+B) 
+
+![](figures/data-b.png)
+]
+
+.pull-right[
+C)
+
+![](figures/data-c.png)
+D) 
+
+![](figures/data-d.png)
+]
+
+---
+
+## What would "tidy" lab data look like? 
+
+.pull-left[
+A)
+
+![](figures/data-a.png)
+
+B) 
+
+![](figures/data-b.png)
+]
+
+.pull-right[
+
+.accent-blue[C)]
+
+![](figures/data-c.png)
+D) 
+
+![](figures/data-d.png)
+]
+
+---
+
+## `tidyr` actions 
+
+`pivot_longer()` and `pivot_wider()` reshape data 
+* `pivot_wider(patient_vitals, id_cols = patient_id,names_from = test, values_from = value)`
+
+`separate()`, `extract()` and `unite()` split and combine character columns
+* `separate(patient_vitals, value, into = c("value_systolic", "diastolic"), sep = "/")`
+
+`drop_na()`, `complete()`, `fill()`, and `replace_na()` format missing values
+* `drop_na(pateint_vitals)`
+
+---
+
+## `dplyr` verbs and syntax
+
+`select()` subset columns
+* `select(patient_vitals, patient_id, test)`
+
+`filter()` subset rows
+* `filter(patient_vitals, test == "height")`
+
+`mutate()` create new variables/columns
+* `mutate(patient_vitals, log_value = log(value))`
+
+`summarise()` aggregates rows
+* `summarise(patient_vitals, avg_value = mean(value, na.rm = TRUE))`
+
+`arrange()` orders rows 
+* `arrange(patient_vitals, patient_id)`
+
+.blank[blank line]
+
+Operations can be chained together with the pipe operator (`%&gt;%`) 
+
+---
+
+class: center middle
+
+.dramatic[
+Lets do it 
+in R!
+]
+
+
+
+&lt;style type="text/css"&gt;
+.talk-logo {
+  width: 288px;
+  height: 334px;
+  position: absolute;
+  top: 5%;
+  left: 35%;
+  background-image: url('figures/dplyr-logo.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.talk-meta {
+  #font-family: Overpass;
+  position: absolute;
+  text-align: left;
+  bottom: 10px;
+  left: 25px;
+}
+.talk-author {
+  color: #444;
+  font-weight: bold;
+  font-size: 1.5em;
+  line-height: 1em;
+}
+.talk-date {
+  color: #666;
+  font-size: 1.25em;
+  line-height: 0;
+}
+.hide-count .remark-slide-number {
+  display: none;
+}
+# sizing 
+.w-50 {
+  width: 50%;
+}
+.w-75 {
+  width: 75%;
+}
+.w-150 {
+  width: 150%;
+}
+.h-center {
+  margin: 0 auto;
+}
+.top-0    { top:    0; }
+.right-0  { right:  0; }
+.bottom-0 { bottom: 0; }
+.left-0   { left:   0; }
+
+# colors
+.accent-other { 
+  color: light brilliant orange,
+}
+.accent-purple { 
+  color: #b668f7 ; 
+}
+.accent-blue { 
+  color: #005a75 ;
+}
+.accent-orange{
+  color: #f9850a ;
+}
+.blank { 
+  color: white ;
+}
+.dramatic p {
+  font-size: 145px;
+  color: #005a75 ;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+&lt;/style&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
