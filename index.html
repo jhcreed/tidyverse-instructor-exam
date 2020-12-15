@@ -36,18 +36,40 @@ class: center middle hide-count hide-logo
 
 ---
 
-## Patient lab data  
+class: center middle
+
+## Why should we care about tidy data? 
+
+---
+
+## Tidy data makes your life better
+
+Most of your time will be spent cleaning data 
+
+You are the expert on your data
+
+Consistent formatting will save you/your collaborators many headaches
+
+---
+
+## Looking at some data   
 
 .pull-left[
 Theoretical example based on common lab data.
 
-3 columns and 15 rows:
+4 columns and 300 rows:
 
 1. `patient_id` : 5 digit number unique to each patient
-2. `test` : name of lab measurement 
+2. `gender`: patient gender 
+  + `Female` or `Male`
+3. `test` : name of lab measurement 
   + `height`, `weight` and `blood`
-3. `value` : value of the lab measurement
+4. `value` : value of the lab measurement
   + inches, pounds, and systolic/diastolic
+
+.blank[blank line]
+
+👉 Data available on [GitHub](https://github.com/jhcreed/tidyverse-instructor-exam/tree/main/data)
 
 ]
 
@@ -55,35 +77,37 @@ Theoretical example based on common lab data.
 
 
 ```r
-patient_vitals
+example_lab
 ```
 
 ```
-## # A tibble: 15 x 3
-##    patient_id test   value 
-##         &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
-##  1      15628 height 68    
-##  2      15628 weight 175   
-##  3      15628 blood  121/89
-##  4      73694 height 72    
-##  5      73694 weight 220   
-##  6      73694 blood  138/82
-##  7      42119 height 66    
-##  8      42119 weight 135   
-##  9      42119 blood  &lt;NA&gt;  
-## 10      98056 height 61    
-## 11      98056 weight 120   
-## 12      98056 blood  144/95
-## 13      87417 height 67    
-## 14      87417 weight 191   
-## 15      87417 blood  137/91
+## # A tibble: 300 x 4
+##    patient_id gender test   values 
+##         &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  
+##  1      14965 Male   height 84     
+##  2      14965 Male   weight 227    
+##  3      14965 Male   blood  161/116
+##  4      55735 Female height 71     
+##  5      55735 Female weight 264    
+##  6      55735 Female blood  176/111
+##  7      15942 Male   height 68     
+##  8      15942 Male   weight 207    
+##  9      15942 Male   blood  112/117
+## 10      28603 Male   height 61     
+## # … with 290 more rows
 ```
 
 ]
 
 ---
 
+class: center middle
+
 ## What is "tidy" data? 
+
+---
+
+## Elements of "tidy" data 
 
 .pull-left[
 Data comes in all shapes and sizes, but not all data organization is made equal!
@@ -152,7 +176,14 @@ D)
 
 ---
 
-## `tidyr` actions 
+class: center middle
+
+## The tidyverse
+&lt;img src="figures/tidyverse-logo.png" width="10%" align="center"/&gt;
+
+---
+
+## `tidyr` actions &lt;img src="figures/tidyr-logo.png" width="10%" align="right"/&gt;
 
 `pivot_longer()` and `pivot_wider()` reshape data 
 * `pivot_wider(patient_vitals, id_cols = patient_id,names_from = test, values_from = value)`
@@ -165,7 +196,7 @@ D)
 
 ---
 
-## `dplyr` verbs and syntax
+## `dplyr` verbs and syntax &lt;img src="figures/dplyr-logo.png" width="10%" align="right"/&gt;
 
 `select()` subset columns
 * `select(patient_vitals, patient_id, test)`
@@ -191,20 +222,19 @@ Operations can be chained together with the pipe operator (`%&gt;%`)
 class: center middle
 
 .dramatic[
-Lets do it 
-in R!
+To R!
 ]
 
 
 
 &lt;style type="text/css"&gt;
 .talk-logo {
-  width: 288px;
-  height: 334px;
+  width: 488px;
+  height: 434px;
   position: absolute;
-  top: 5%;
-  left: 35%;
-  background-image: url('figures/dplyr-logo.png');
+  top: 3%;
+  left: 30%;
+  background-image: url('figures/logos.png');
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -255,7 +285,7 @@ in R!
   color: #b668f7 ; 
 }
 .accent-blue { 
-  color: #005a75 ;
+  color: #CA0274 ;
 }
 .accent-orange{
   color: #f9850a ;
@@ -265,7 +295,15 @@ in R!
 }
 .dramatic p {
   font-size: 145px;
-  color: #005a75 ;
+  color: #4C0070 ;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.transition p {
+  font-size: 145px;
+  color: #4C0070 ;
+  
   margin-top: 0;
   margin-bottom: 0;
 }

@@ -19,8 +19,8 @@ output:
 
 ```{r xaringan-themer, include = FALSE}
 library(xaringanthemer)
-duo_accent(primary_color = "#02b4ba", 
-           secondary_color = "#005a75",
+duo_accent(primary_color = "#4C0070", 
+           secondary_color = "#6E006E",
            code_highlight_color = "rgba(207, 244, 252,0.5)",)
 ```
 
@@ -37,9 +37,11 @@ xaringanExtra::use_xaringan_extra(c("animate_css", "text_poster", "panelset"))
 xaringanExtra::use_tachyons()
 
 library(tidyverse)
-library(readxl)
+# library(readxl)
+# 
+# patient_vitals <- read_excel("data/patient-vitals.xlsx", sheet = "Sheet2")
 
-patient_vitals <- read_excel("data/patient-vitals.xlsx", sheet = "Sheet2")
+load("data/example_lab.RData")
 
 ```
 
@@ -59,32 +61,60 @@ class: center middle hide-count hide-logo
 
 ---
 
-## Patient lab data  
+class: center middle
+
+## Why should we care about tidy data? 
+
+---
+
+## Tidy data makes your life better
+
+Most of your time will be spent cleaning data 
+
+You are the expert on your data
+
+Consistent formatting will save you/your collaborators many headaches
+
+---
+
+## Looking at some data   
 
 .pull-left[
 Theoretical example based on common lab data.
 
-`r ncol(patient_vitals)` columns and `r nrow(patient_vitals)` rows:
+`r ncol(example_lab)` columns and `r nrow(example_lab)` rows:
 
 1. `patient_id` : 5 digit number unique to each patient
-2. `test` : name of lab measurement 
+2. `gender`: patient gender 
+  + `Female` or `Male`
+3. `test` : name of lab measurement 
   + `height`, `weight` and `blood`
-3. `value` : value of the lab measurement
+4. `value` : value of the lab measurement
   + inches, pounds, and systolic/diastolic
+
+.blank[blank line]
+
+`r emo::ji("point_right")` Data available on [GitHub](https://github.com/jhcreed/tidyverse-instructor-exam/tree/main/data)
 
 ]
 
 .pull-right[
 
 ```{r untidy-data-example}
-patient_vitals
+example_lab
 ```
 
 ]
 
 ---
 
+class: center middle
+
 ## What is "tidy" data? 
+
+---
+
+## Elements of "tidy" data 
 
 .pull-left[
 Data comes in all shapes and sizes, but not all data organization is made equal!
@@ -153,7 +183,14 @@ D)
 
 ---
 
-## `tidyr` actions 
+class: center middle
+
+## The tidyverse
+<img src="figures/tidyverse-logo.png" width="10%" align="center"/>
+
+---
+
+## `tidyr` actions <img src="figures/tidyr-logo.png" width="10%" align="right"/>
 
 `pivot_longer()` and `pivot_wider()` reshape data 
 * `pivot_wider(patient_vitals, id_cols = patient_id,names_from = test, values_from = value)`
@@ -166,7 +203,7 @@ D)
 
 ---
 
-## `dplyr` verbs and syntax
+## `dplyr` verbs and syntax <img src="figures/dplyr-logo.png" width="10%" align="right"/>
 
 `select()` subset columns
 * `select(patient_vitals, patient_id, test)`
@@ -192,20 +229,19 @@ Operations can be chained together with the pipe operator (`%>%`)
 class: center middle
 
 .dramatic[
-Lets do it 
-in R!
+To R!
 ]
 
 
 
 ```{css, echo=FALSE}
 .talk-logo {
-  width: 288px;
-  height: 334px;
+  width: 488px;
+  height: 434px;
   position: absolute;
-  top: 5%;
-  left: 35%;
-  background-image: url('figures/dplyr-logo.png');
+  top: 3%;
+  left: 30%;
+  background-image: url('figures/logos.png');
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -256,7 +292,7 @@ in R!
   color: #b668f7 ; 
 }
 .accent-blue { 
-  color: #005a75 ;
+  color: #CA0274 ;
 }
 .accent-orange{
   color: #f9850a ;
@@ -266,7 +302,15 @@ in R!
 }
 .dramatic p {
   font-size: 145px;
-  color: #005a75 ;
+  color: #4C0070 ;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.transition p {
+  font-size: 145px;
+  color: #4C0070 ;
+  
   margin-top: 0;
   margin-bottom: 0;
 }
