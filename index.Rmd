@@ -228,9 +228,33 @@ Operations can be chained together with the pipe operator (`%>%`)
 
 class: center middle
 
-.dramatic[
-To R!
-]
+## To R!
+
+---
+
+## Which command would sort your data by ascending height then descending weight?
+
+A) arrange(tidy_data, height & desc(weight))
+
+B) arrange(tidy_data, height, desc(weight))
+
+C) arrange(tidy_data, height) %>% arrange(desc(weight))
+
+D) arrange(tidy_data, c(height, desc(weight)))
+
+
+---
+
+## Which command would sort your data by ascending height then descending weight?
+
+A) arrange(tidy_data, height & desc(weight))
+
+.accent-blue[B) arrange(tidy_data, height, desc(weight))]
+
+C) arrange(tidy_data, height) %>% arrange(desc(weight))
+
+
+D) arrange(tidy_data, c(height, desc(weight)))
 
 
 
