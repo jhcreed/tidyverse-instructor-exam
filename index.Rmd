@@ -75,6 +75,17 @@ You are the expert on your data
 
 Consistent formatting will save you/your collaborators many headaches
 
+???
+
+Tidying data is for your own benefit. As the majority of your time will be spent
+trying to format your data for functions and plotting, knowing and sticking to an 
+easy, clear format that can be easily manipulated to fit your needs will save you 
+a lot of headaches. It will also ensure that your data looks consistent across data 
+sets and projects. This is particularly important if your working with a group or 
+need to come back to your data later. Furthermore, the person generating data is 
+often the person who knows the data best - so tidying your data gives you an 
+opportunity to remove or clean up any variables that have any special considerations. 
+
 ---
 
 ## Looking at some data   
@@ -141,17 +152,20 @@ Data comes in all shapes and sizes, but not all data organization is made equal!
 .pull-left[
 A)
 
-![](figures/data-a.png)
+<!-- ![](figures/data-a.png) -->
+<img src="figures/data-a.png" height="135px" width="500px" />
 
 B) 
 
-![](figures/data-b.png)
+<!-- ![](figures/data-b.png) -->
+<img src="figures/data-b.png" height="135px" width="500px" />
 ]
 
 .pull-right[
 C)
 
 ![](figures/data-c.png)
+
 D) 
 
 ![](figures/data-d.png)
@@ -164,18 +178,22 @@ D)
 .pull-left[
 A)
 
-![](figures/data-a.png)
+<!-- ![](figures/data-a.png) -->
+<img src="figures/data-a.png" height="135px" width="500px" />
+
 
 B) 
 
-![](figures/data-b.png)
+<!-- ![](figures/data-b.png) -->
+<img src="figures/data-b.png" height="135px" width="500px" />
 ]
 
 .pull-right[
 
 .accent-blue[C)]
 
-![](figures/data-c.png)
+![](figures/answer.png)
+
 D) 
 
 ![](figures/data-d.png)
@@ -193,32 +211,32 @@ class: center middle
 ## `tidyr` actions <img src="figures/tidyr-logo.png" width="10%" align="right"/>
 
 `pivot_longer()` and `pivot_wider()` reshape data 
-* `pivot_wider(patient_vitals, id_cols = patient_id,names_from = test, values_from = value)`
+* `pivot_wider(example_lab, id_cols = patient_id,names_from = test, values_from = value)`
 
 `separate()`, `extract()` and `unite()` split and combine character columns
-* `separate(patient_vitals, value, into = c("value_systolic", "diastolic"), sep = "/")`
+* `separate(example_lab, value, into = c("value_systolic", "diastolic"), sep = "/")`
 
 `drop_na()`, `complete()`, `fill()`, and `replace_na()` format missing values
-* `drop_na(pateint_vitals)`
+* `drop_na(example_lab)`
 
 ---
 
 ## `dplyr` verbs and syntax <img src="figures/dplyr-logo.png" width="10%" align="right"/>
 
 `select()` subset columns
-* `select(patient_vitals, patient_id, test)`
+* `select(example_lab, patient_id, test)`
 
 `filter()` subset rows
-* `filter(patient_vitals, test == "height")`
+* `filter(example_lab, test == "height")`
 
 `mutate()` create new variables/columns
-* `mutate(patient_vitals, log_value = log(value))`
+* `mutate(example_lab, log_value = log(value))`
 
 `summarise()` aggregates rows
-* `summarise(patient_vitals, avg_value = mean(value, na.rm = TRUE))`
+* `summarise(example_lab, avg_value = mean(value, na.rm = TRUE))`
 
 `arrange()` orders rows 
-* `arrange(patient_vitals, patient_id)`
+* `arrange(example_lab, patient_id)`
 
 .blank[blank line]
 
